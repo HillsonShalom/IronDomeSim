@@ -1,0 +1,17 @@
+﻿@{
+    Layout = "~/Views/Shared/MapLayout.cshtml";
+    ViewData["Title"] = "Defenser Page";
+}
+@section MyScript {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/DefenserMap.js"></script>
+}
+<style>
+    .notification {
+        position: fixed;
+        z-index: 1000;
+        background-color: tomato;
+        height: 100px;
+        width: 230px;
+    }
+</style>

@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - IronDomeSim</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    @RenderSection("MyHead", required: false);
+</head>
+<body style="padding: 0; margin: 0;" dir>
+    <style>
+        #map {
+            position: fixed;
+            height: 100vh;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+            z-index: 100;
+        }
+    </style>
+    <div id="map" style="z-index: 100"></div>
+    @RenderBody()
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        var map = L.map('map').setView([31.0461, 34.8516], 8); // ישראל
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+    </script>
+    @RenderSection("MyScript", required: false)
+</body>
+</html>

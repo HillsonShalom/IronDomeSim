@@ -1,0 +1,72 @@
+﻿@using Newtonsoft.Json
+@model List<IronDomeSim.Models.Weapon>
+@{
+    Layout = "~/Views/Shared/MapLayout.cshtml";
+    ViewData["Title"] = "Attacker Page";
+    string[] srcs = new string[15];
+    for (int i = 1; i <= 15; i++)
+    {
+        //byte[] imageBytes = System.IO.File.ReadAllBytes($"wwwroot/Images/{i}.png");
+        //srcs[i - 1] = Convert.ToBase64String(imageBytes);
+        srcs[i - 1] = Model[i - 1].ImgBase64;
+    }
+    int initNum = 20;
+    string models = JsonConvert.SerializeObject(Model);
+}
+@section MyScript {
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/AttackerMap.js"></script>
+}
+@section MyHead {
+}
+
+<style>
+    .missile {
+        height: 30px;
+        width: 150px;
+        position: fixed;
+        right: 20px;
+        border-radius: 15px;
+        background-color: tomato;
+        z-index: 1000;
+    }
+    .missle-img {
+        margin-left: 15px;
+        height: 30px;
+        width: 100px;
+    }
+</style>
+<input type="text" style="z-index: 0; position: fixed; display: none;" id="source-latitude" readonly/>
+<input type="text" style="z-index: 0; position: fixed; display: none;" id="source-longitude" readonly />
+<input type="text" style="z-index: 0; position: fixed; display: none;" id="target-latitude" readonly />
+<input type="text" style="z-index: 0; position: fixed; display: none;" id="target-longitude" readonly />
+<div>
+    <label id="source_dispaly" style="z-index: 200; position: fixed; top: 20px; left: 20px;">Hello </label>
+    <label id="target_display" style="z-index: 200; position: fixed; top: 80px; left: 20px;">World!</label>
+</div>
+
+@* @foreach (string s in srcs)
+{
+    <div class="missile" style="top: @($"{initNum}px;")">
+        <a action="SendMissile()">
+            <img src="data:image/jpeg;base64,@s" alt="Alternate Text" class="missle-img" />
+        </a>
+    </div>
+    initNum += 42;
+} *@
+<input id="models" value="@models" style="display: none;" />
+<script>
+    let js = document.getElementById("models").value;
+    let models = JSON.parse(js);
+</script>
+@for (int i = 0; i < 15; i++)
+{
+    <p>@srcs[i]</p>
+    <div onclick="SendMissile(models[@i])" class="missile" style="top: @($"{initNum}px;")">
+        <img src="data:image/jpeg;base64,@srcs[i]" alt="Alternate Text" class="missle-img" />
+    </div>
+    initNum += 42;
+}
+
+
+
